@@ -772,3 +772,42 @@ FAQs： <https://github.com/zhayujie/chatgpt-on-wechat/wiki/FAQs>
 # 🌟 贡献者
 
 ![cow contributors](https://contrib.rocks/image?repo=zhayujie/chatgpt-on-wechat&max=1000)
+
+
+
+## 启动
+
+```bash
+lsof -nP -iTCP:9899 -sTCP:LISTEN
+lsof -nP -iTCP:9899 -sTCP:LISTEN
+kill -9 <PID>
+python3 app.py
+```
+
+```bash
+python3 - <<'PY'
+import urllib.request
+import sys
+url='http://localhost:9899/chat'
+try:
+    with urllib.request.urlopen(url, timeout=5) as resp:
+        data = resp.read(120)
+    print('STATUS', resp.status)
+    print('SNIP', data[:80])
+except Exception as e:
+    print('ERROR', e)
+    sys.exit(1)
+PY
+```
+
+## 停止
+
+```bash
+ps -ef | grep app.py | grep -v grep
+kill -9 <PID>
+(base) kevin@MacBook-Pro-Kevin chatgpt-on-wechat % ps -ef | grep app.py | grep -v grep
+  501 49907     1   0 11:20下午 ttys010    0:02.01 /usr/local/Cellar/python/3.7.7/Frameworks/Python.framework/Versions/3.7/Resources/Python.app/Contents/MacOS/Python /Users/kevin/IdeaProjects/Trae_AI/Fresh-OA/chatgpt-on-wechat/app.py
+  501 88949     1   0 10:17下午 ttys013    0:05.88 /usr/local/Cellar/python/3.7.7/Frameworks/Python.framework/Versions/3.7/Resources/Python.app/Contents/MacOS/Python /Users/kevin/IdeaProjects/Trae_AI/Fresh-OA/chatgpt-on-wechat/app.py
+(base) kevin@MacBook-Pro-Kevin chatgpt-on-wechat % kill -9 49907
+(base) kevin@MacBook-Pro-Kevin chatgpt-on-wechat % kill -9 88949
+```
